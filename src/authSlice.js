@@ -6,6 +6,7 @@ const authSlice = createSlice({
     token: null,
     isAuthenticated: false,
     isLoading: false,
+    profileName:null
   },
   reducers: {
     loginStart: (state) => {
@@ -23,8 +24,23 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
     },
+    modifyProfileName: (state, action) => {
+      state.profileName = action.payload;
+    }
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout,modifyProfileName } = authSlice.actions;
+
+// Export the reducer directly
 export default authSlice.reducer;
+
+// Export a prepare function for non-serializable values
+// export const prepareAction = (action) => {
+//   return {
+//     payload: action.payload,
+//   };
+// };
+
+// Usage example:
+// dispatch(prepareAction(loginSuccess(someNonSerializableValue)));

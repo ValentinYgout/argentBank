@@ -10,6 +10,7 @@ import { logout } from '../../authSlice';
 
 const NavBar = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const profileName = useSelector(state => state.auth.profileName);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -35,10 +36,10 @@ const NavBar = () => {
 
               <Link className="main-nav-item" to="/profile">
                 <i className="fa fa-user-circle"></i>
-                Profile
+                {profileName}
               </Link>
               <Link className="main-nav-item" to="/" onClick={handleLogout}>
-                <i className="fa fa-user-circle"></i>
+                <i className="fa fa-sign-out"></i>
                 Log Out
 
               </Link>

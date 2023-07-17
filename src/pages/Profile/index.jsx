@@ -1,13 +1,14 @@
 import React from 'react';
 import "./style.css";
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import ApiService from '../../services/ApiService';
 import { useEffect, useState } from 'react';
 
 const Profile = () => {
-    const [isEditing, setIsEditing] = useState(false);
-    const [editFirstName, setEditFirstName] = useState(null);
-    const [editLastName, setEditLastName] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editFirstName, setEditFirstName] = useState(null);
+  const [editLastName, setEditLastName] = useState(null);
+  const dispatch = useDispatch();
 
  
   const token = useSelector((state) => state.auth.token);
@@ -15,7 +16,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const fetchedProfile = await ApiService.fetchProfile(token);
+        const fetchedProfile = await ApiService.fetchProfile(dispatch,token);
         setEditFirstName(fetchedProfile.firstName)
         setEditLastName(fetchedProfile.lastName)
       } catch (error) {
@@ -32,7 +33,7 @@ const Profile = () => {
 
   const handleEdit =  async ()=>{
         try {
-          const EditedProfile = await ApiService.EditProfile(editFirstName,editLastName,token);
+          const EditedProfile = await ApiService.EditProfile(dispatch,editFirstName,editLastName,token);
           console.log(EditedProfile)
           setIsEditing(false)
      
@@ -59,7 +60,7 @@ const Profile = () => {
       </div>
     </div>
   ) : (
-    <div>
+    <div className='welcome'>
       <h1>
         Welcome back<br />
         {editFirstName} {editLastName}
